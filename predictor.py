@@ -279,7 +279,7 @@ class Predictor(BasePredictor):
 
         # Extract instance_data ZIP file
         instance_data_path = os.path.join(instance_dir_name, instance_subdir_name)
-        # class_data_path = os.path.join(class_dir_name, class_subdir_name)
+        class_data_path = os.path.join(class_dir_name, class_subdir_name)
 
         if not os.path.exists(instance_data_path):
             os.makedirs(instance_data_path)
