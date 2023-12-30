@@ -19,15 +19,10 @@ build:
     - "voluptuous==0.13.1"
     - "huggingface-hub==0.15.1"
     - "open-clip-torch==2.20.0"
-
-commands:
-  pre_install:
-    - pip install -e .
-  post_install:
-    - pip install --extra-index-url https://download.pytorch.org/whl/cu118 torch==2.0.1+cu118 torchvision==0.15.2+cu118
-    - pip install --upgrade -r requirements.txt
-    - pip install xformers==0.0.20
-    - pip install toml
-    - pip install bitsandbytes==0.35.0
+    - "torch==2.0.1+cu118"
+    - "torchvision==0.15.2+cu118"
+    - "xformers==0.0.20"
+    - "toml"
+    - "bitsandbytes==0.35.0"
 
 predict: "predictor.py:Predictor"
