@@ -2732,8 +2732,8 @@ def add_optimizer_arguments(parser: argparse.ArgumentParser):
     )
     parser.add_argument(
         "--lr_warmup_steps",
-        type=int,
-        default=0,
+        type=float,
+        default=0.1,
         help="Number of steps for the warmup in the lr scheduler (default is 0) / 学習率のスケジューラをウォームアップするステップ数（デフォルト0）",
     )
     parser.add_argument(
@@ -3200,7 +3200,7 @@ def add_dataset_arguments(
     parser.add_argument(
         "--resolution",
         type=str,
-        default=None,
+        default="512,512",
         help="resolution in training ('size' or 'width,height') / 学習時の画像解像度（'サイズ'指定、または'幅,高さ'指定）",
     )
     parser.add_argument(
@@ -3284,7 +3284,7 @@ def add_sd_saving_arguments(parser: argparse.ArgumentParser):
     parser.add_argument(
         "--save_model_as",
         type=str,
-        default=None,
+        default="safetensors",
         choices=[None, "ckpt", "safetensors", "diffusers", "diffusers_safetensors"],
         help="format to save the model (default is same to original) / モデル保存時の形式（未指定時は元モデルと同じ）",
     )
@@ -3709,7 +3709,7 @@ def get_scheduler_fix(args, optimizer: Optimizer, num_processes: int):
     Unified API to get any scheduler from its name.
     """
     name = args.lr_scheduler
-    num_warmup_steps: Optional[int] = args.lr_warmup_steps
+    num_warmup_steps: Optional[int] = int(args.max_train_steps * args.lr_warmup_steps)
     num_training_steps = args.max_train_steps * num_processes  # * args.gradient_accumulation_steps
     num_cycles = args.lr_scheduler_num_cycles
     power = args.lr_scheduler_power

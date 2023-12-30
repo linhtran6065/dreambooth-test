@@ -41,7 +41,7 @@ from library.custom_train_functions import (
 # perlin_noise,
 
 
-def train(args):
+def main(args):
     train_util.verify_training_args(args)
     train_util.prepare_dataset_args(args, False)
 
@@ -146,8 +146,13 @@ def train(args):
 
         accelerator.wait_for_everyone()
 
+    if args.stop_text_encoder_training >= 0:
+        stop_text_encoder_training_step = int(args.max_train_steps * args.stop_text_encoder_training)
+    elif args.stop_text_encoder_training is None:
+        stop_text_encoder_training_step = None
+
     # 学習を準備する：モデルを適切な状態にする
-    train_text_encoder = args.stop_text_encoder_training is None or args.stop_text_encoder_training >= 0
+    train_text_encoder = stop_text_encoder_training_step is None or stop_text_encoder_training_step >= 0
     unet.requires_grad_(True)  # 念のため追加
     text_encoder.requires_grad_(train_text_encoder)
     if not train_text_encoder:
@@ -200,8 +205,8 @@ def train(args):
     # データセット側にも学習ステップを送信
     train_dataset_group.set_max_train_steps(args.max_train_steps)
 
-    if args.stop_text_encoder_training is None:
-        args.stop_text_encoder_training = args.max_train_steps + 1  # do not stop until end
+    if stop_text_encoder_training_step is None:
+        stop_text_encoder_training_step = args.max_train_steps + 1  # do not stop until end
 
     # lr schedulerを用意する TODO gradient_accumulation_stepsの扱いが何かおかしいかもしれない。後で確認する
     lr_scheduler = train_util.get_scheduler_fix(args, optimizer, accelerator.num_processes)
@@ -280,13 +285,13 @@ def train(args):
         # 指定したステップ数までText Encoderを学習する：epoch最初の状態
         unet.train()
         # train==True is required to enable gradient_checkpointing
-        if args.gradient_checkpointing or global_step < args.stop_text_encoder_training:
+        if args.gradient_checkpointing or global_step < stop_text_encoder_training_step:
             text_encoder.train()
 
         for step, batch in enumerate(train_dataloader):
             current_step.value = global_step
             # 指定したステップ数でText Encoderの学習を止める
-            if global_step == args.stop_text_encoder_training:
+            if global_step == stop_text_encoder_training_step:
                 accelerator.print(f"stop text encoder training at step {global_step}")
                 if not args.gradient_checkpointing:
                     text_encoder.train(False)
@@ -303,7 +308,7 @@ def train(args):
                 b_size = latents.shape[0]
 
                 # Get the text embedding for conditioning
-                with torch.set_grad_enabled(global_step < args.stop_text_encoder_training):
+                with torch.set_grad_enabled(global_step < stop_text_encoder_training_step):
                     if args.weighted_captions:
                         encoder_hidden_states = get_weighted_text_embeddings(
                             tokenizer,
@@ -489,10 +494,10 @@ def setup_parser() -> argparse.ArgumentParser:
     return parser
 
 
-if __name__ == "__main__":
-    parser = setup_parser()
+# if __name__ == "__main__":
+#     parser = setup_parser()
 
-    args = parser.parse_args()
-    args = train_util.read_config_from_file(args, parser)
+#     args = parser.parse_args()
+#     args = train_util.read_config_from_file(args, parser)
 
-    train(args)
+#     train(args)
