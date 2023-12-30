@@ -94,17 +94,17 @@ class Predictor(BasePredictor):
             default="1"
         ), 
 
-        train_data_dir: str = Input(#new
-            description="train data dir",
-        ),
+        # train_data_dir: str = Input(#new
+        #     description="train data dir",
+        # ),
 
-        reg_data_dir: str = Input(#new
-            description="reg data dir",
-        ),
+        # reg_data_dir: str = Input(#new
+        #     description="reg data dir",
+        # ),
 
-        stop_text_encoder_training: int = Input(#new
-            description="stop text encoder training step",
-        ),
+        # stop_text_encoder_training: int = Input(#new
+        #     description="stop text encoder training step",
+        # ),
 
         output_name: str = Input(#new
             description="model output name",
