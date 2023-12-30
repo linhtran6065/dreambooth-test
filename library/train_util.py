@@ -2683,12 +2683,12 @@ def add_sd_models_arguments(parser: argparse.ArgumentParser):
 
 
 def add_optimizer_arguments(parser: argparse.ArgumentParser):
-    parser.add_argument(
-        "--optimizer_type",
-        type=str,
-        default="",
-        help="Optimizer to use / オプティマイザの種類: AdamW (default), AdamW8bit, PagedAdamW, PagedAdamW8bit, PagedAdamW32bit, Lion8bit, PagedLion8bit, Lion, SGDNesterov, SGDNesterov8bit, DAdaptation(DAdaptAdamPreprint), DAdaptAdaGrad, DAdaptAdam, DAdaptAdan, DAdaptAdanIP, DAdaptLion, DAdaptSGD, AdaFactor",
-    )
+    # parser.add_argument(
+    #     "--optimizer_type",
+    #     type=str,
+    #     default="",
+    #     help="Optimizer to use / オプティマイザの種類: AdamW (default), AdamW8bit, PagedAdamW, PagedAdamW8bit, PagedAdamW32bit, Lion8bit, PagedLion8bit, Lion, SGDNesterov, SGDNesterov8bit, DAdaptation(DAdaptAdamPreprint), DAdaptAdaGrad, DAdaptAdam, DAdaptAdan, DAdaptAdanIP, DAdaptLion, DAdaptSGD, AdaFactor",
+    # )
 
     # backward compatibility
     parser.add_argument(
@@ -2702,7 +2702,7 @@ def add_optimizer_arguments(parser: argparse.ArgumentParser):
         help="use Lion optimizer (requires lion-pytorch) / Lionオプティマイザを使う（ lion-pytorch のインストールが必要）",
     )
 
-    parser.add_argument("--learning_rate", type=float, default=2.0e-6, help="learning rate / 学習率")
+    # parser.add_argument("--learning_rate", type=float, default=2.0e-6, help="learning rate / 学習率")
     parser.add_argument(
         "--max_grad_norm", default=1.0, type=float, help="Max gradient norm, 0 for no clipping / 勾配正規化の最大norm、0でclippingを行わない"
     )
@@ -2724,18 +2724,18 @@ def add_optimizer_arguments(parser: argparse.ArgumentParser):
         help='additional arguments for scheduler (like "T_max=100") / スケジューラの追加引数（例： "T_max100"）',
     )
 
-    parser.add_argument(
-        "--lr_scheduler",
-        type=str,
-        default="constant",
-        help="scheduler to use for learning rate / 学習率のスケジューラ: linear, cosine, cosine_with_restarts, polynomial, constant (default), constant_with_warmup, adafactor",
-    )
-    parser.add_argument(
-        "--lr_warmup_steps",
-        type=float,
-        default=0.1,
-        help="Number of steps for the warmup in the lr scheduler (default is 0) / 学習率のスケジューラをウォームアップするステップ数（デフォルト0）",
-    )
+    # parser.add_argument(
+    #     "--lr_scheduler",
+    #     type=str,
+    #     default="constant",
+    #     help="scheduler to use for learning rate / 学習率のスケジューラ: linear, cosine, cosine_with_restarts, polynomial, constant (default), constant_with_warmup, adafactor",
+    # )
+    # parser.add_argument(
+    #     "--lr_warmup_steps",
+    #     type=float,
+    #     default=0.1,
+    #     help="Number of steps for the warmup in the lr scheduler (default is 0) / 学習率のスケジューラをウォームアップするステップ数（デフォルト0）",
+    # )
     parser.add_argument(
         "--lr_scheduler_num_cycles",
         type=int,
@@ -2751,8 +2751,8 @@ def add_optimizer_arguments(parser: argparse.ArgumentParser):
 
 
 def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: bool):
-    parser.add_argument("--output_dir", type=str, default=None, help="directory to output trained model / 学習後のモデル出力先ディレクトリ")
-    parser.add_argument("--output_name", type=str, default=None, help="base name of trained model file / 学習後のモデルの拡張子を除くファイル名")
+    # parser.add_argument("--output_dir", type=str, default=None, help="directory to output trained model / 学習後のモデル出力先ディレクトリ")
+    # parser.add_argument("--output_name", type=str, default=None, help="base name of trained model file / 学習後のモデルの拡張子を除くファイル名")
     parser.add_argument(
         "--huggingface_repo_id", type=str, default=None, help="huggingface repo name to upload / huggingfaceにアップロードするリポジトリ名"
     )
@@ -2785,16 +2785,16 @@ def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: 
         action="store_true",
         help="upload to huggingface asynchronously / huggingfaceに非同期でアップロードする",
     )
-    parser.add_argument(
-        "--save_precision",
-        type=str,
-        default=None,
-        choices=[None, "float", "fp16", "bf16"],
-        help="precision in saving / 保存時に精度を変更して保存する",
-    )
-    parser.add_argument(
-        "--save_every_n_epochs", type=int, default=None, help="save checkpoint every N epochs / 学習中のモデルを指定エポックごとに保存する"
-    )
+    # parser.add_argument(
+    #     "--save_precision",
+    #     type=str,
+    #     default=None,
+    #     choices=[None, "float", "fp16", "bf16"],
+    #     help="precision in saving / 保存時に精度を変更して保存する",
+    # )
+    # parser.add_argument(
+    #     "--save_every_n_epochs", type=int, default=None, help="save checkpoint every N epochs / 学習中のモデルを指定エポックごとに保存する"
+    # )
     parser.add_argument(
         "--save_every_n_steps", type=int, default=None, help="save checkpoint every N steps / 学習中のモデルを指定ステップごとに保存する"
     )
@@ -2835,7 +2835,7 @@ def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: 
     )
     parser.add_argument("--resume", type=str, default=None, help="saved state to resume training / 学習再開するモデルのstate")
 
-    parser.add_argument("--train_batch_size", type=int, default=1, help="batch size for training / 学習時のバッチサイズ")
+    # parser.add_argument("--train_batch_size", type=int, default=1, help="batch size for training / 学習時のバッチサイズ")
     parser.add_argument(
         "--max_token_length",
         type=int,
@@ -2858,19 +2858,19 @@ def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: 
         "--vae", type=str, default=None, help="path to checkpoint of vae to replace / VAEを入れ替える場合、VAEのcheckpointファイルまたはディレクトリ"
     )
 
-    parser.add_argument("--max_train_steps", type=int, default=1600, help="training steps / 学習ステップ数")
+    # parser.add_argument("--max_train_steps", type=int, default=1600, help="training steps / 学習ステップ数")
     parser.add_argument(
         "--max_train_epochs",
         type=int,
         default=None,
         help="training epochs (overrides max_train_steps) / 学習エポック数（max_train_stepsを上書きします）",
     )
-    parser.add_argument(
-        "--max_data_loader_n_workers",
-        type=int,
-        default=8,
-        help="max num workers for DataLoader (lower is less main RAM usage, faster epoch start and slower data loading) / DataLoaderの最大プロセス数（小さい値ではメインメモリの使用量が減りエポック間の待ち時間が減りますが、データ読み込みは遅くなります）",
-    )
+    # parser.add_argument(
+    #     "--max_data_loader_n_workers",
+    #     type=int,
+    #     default=8,
+    #     help="max num workers for DataLoader (lower is less main RAM usage, faster epoch start and slower data loading) / DataLoaderの最大プロセス数（小さい値ではメインメモリの使用量が減りエポック間の待ち時間が減りますが、データ読み込みは遅くなります）",
+    # )
     parser.add_argument(
         "--persistent_data_loader_workers",
         action="store_true",
@@ -2886,9 +2886,9 @@ def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: 
         default=1,
         help="Number of updates steps to accumulate before performing a backward/update pass / 学習時に逆伝播をする前に勾配を合計するステップ数",
     )
-    parser.add_argument(
-        "--mixed_precision", type=str, default="no", choices=["no", "fp16", "bf16"], help="use mixed precision / 混合精度を使う場合、その精度"
-    )
+    # parser.add_argument(
+    #     "--mixed_precision", type=str, default="no", choices=["no", "fp16", "bf16"], help="use mixed precision / 混合精度を使う場合、その精度"
+    # )
     parser.add_argument("--full_fp16", action="store_true", help="fp16 training including gradients / 勾配も含めてfp16で学習する")
     parser.add_argument(
         "--full_bf16", action="store_true", help="bf16 training including gradients / 勾配も含めてbf16で学習する"
@@ -3144,7 +3144,7 @@ def add_dataset_arguments(
     parser: argparse.ArgumentParser, support_dreambooth: bool, support_caption: bool, support_caption_dropout: bool
 ):
     # dataset common
-    parser.add_argument("--train_data_dir", type=str, default=None, help="directory for train images / 学習画像データのディレクトリ")
+    # parser.add_argument("--train_data_dir", type=str, default=None, help="directory for train images / 学習画像データのディレクトリ")
     parser.add_argument("--shuffle_caption", action="store_true", help="shuffle separated caption / 区切られたcaptionの各要素をshuffleする")
     parser.add_argument("--caption_separator", type=str, default=",", help="separator for caption / captionの区切り文字")
     parser.add_argument(
@@ -3270,7 +3270,8 @@ def add_dataset_arguments(
 
     if support_dreambooth:
         # DreamBooth dataset
-        parser.add_argument("--reg_data_dir", type=str, default=None, help="directory for regularization images / 正則化画像データのディレクトリ")
+        # parser.add_argument("--reg_data_dir", type=str, default=None, help="directory for regularization images / 正則化画像データのディレクトリ")
+        pass
 
     if support_caption:
         # caption dataset

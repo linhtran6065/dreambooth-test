@@ -36,12 +36,12 @@ def setup_parser(parser) -> argparse.ArgumentParser:
     config_util.add_config_arguments(parser)
     custom_train_functions.add_custom_train_arguments(parser)
 
-    parser.add_argument(
-        "--learning_rate_te",
-        type=float,
-        default=None,
-        help="learning rate for text encoder, default is same as unet / Text Encoderの学習率、デフォルトはunetと同じ",
-    )
+    # parser.add_argument(
+    #     "--learning_rate_te",
+    #     type=float,
+    #     default=None,
+    #     help="learning rate for text encoder, default is same as unet / Text Encoderの学習率、デフォルトはunetと同じ",
+    # )
     parser.add_argument(
         "--no_token_padding",
         action="store_true",
