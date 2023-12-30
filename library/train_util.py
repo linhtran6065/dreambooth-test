@@ -2668,12 +2668,12 @@ def add_sd_models_arguments(parser: argparse.ArgumentParser):
     parser.add_argument(
         "--v_parameterization", action="store_true", help="enable v-parameterization training / v-parameterization学習を有効にする"
     )
-    parser.add_argument(
-        "--pretrained_model_name_or_path",
-        type=str,
-        default=None,
-        help="pretrained model to train, directory to Diffusers model or StableDiffusion checkpoint / 学習元モデル、Diffusers形式モデルのディレクトリまたはStableDiffusionのckptファイル",
-    )
+    # parser.add_argument(
+    #     "--pretrained_model_name_or_path",
+    #     type=str,
+    #     default=None,
+    #     help="pretrained model to train, directory to Diffusers model or StableDiffusion checkpoint / 学習元モデル、Diffusers形式モデルのディレクトリまたはStableDiffusionのckptファイル",
+    # )
     parser.add_argument(
         "--tokenizer_cache_dir",
         type=str,
