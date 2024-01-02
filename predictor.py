@@ -81,7 +81,7 @@ class Predictor(BasePredictor):
         self,
 
         gender: str = Input(
-            description="Specify the gender.",
+            description="Specify the gender (for example: man/woman).",
         ),
 
         identifier: str = Input(
@@ -95,7 +95,7 @@ class Predictor(BasePredictor):
         ), 
 
         output_name: str = Input(
-            description="Name of the model's output file.",
+            description="Name of the model's output file. (for example: output_model)",
         ),
 
         instance_data: Path = Input(
