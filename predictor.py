@@ -216,10 +216,10 @@ class Predictor(BasePredictor):
             default=0.8,
         ),
 
-        noise_offset: float = Input(
-            description="noise_offset",
-            default=0.0,
-        ),
+        # noise_offset: float = Input(
+        #     description="noise_offset",
+        #     default=0.0,
+        # ),
         # scale_lr: bool = Input(
         #     description="Scale the learning rate by the number of GPUs, gradient accumulation steps, and batch size.",
         #     default=False,
@@ -418,7 +418,7 @@ class Predictor(BasePredictor):
             # "cache_latents_to_disk": True,
             "xformers": True,
             "bucket_no_upscale": True,
-            "noise_offset": noise_offset,
+            # "noise_offset": noise_offset,
             # "adaptive_noise_scale": True,
             "await-explicit-shutdown":True,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
@@ -426,7 +426,7 @@ class Predictor(BasePredictor):
 
         try:
             args = Namespace(**args)
-            print(args)
+            # print(args)
             try:
                 parser = convert_namespace_to_parser(args)
             except:
