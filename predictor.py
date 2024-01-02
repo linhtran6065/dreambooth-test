@@ -426,7 +426,8 @@ class Predictor(BasePredictor):
 
         try:
             main(args)
-        except:
+        except Exception as e:
+            print(e)
             print("main not passed")
 
         gc.collect()
