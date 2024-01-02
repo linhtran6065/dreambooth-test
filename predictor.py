@@ -402,6 +402,7 @@ class Predictor(BasePredictor):
 
         try:
             args = Namespace(**args)
+            print(args)
             try:
                 parser = convert_namespace_to_parser(args)
             except:
