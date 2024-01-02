@@ -402,12 +402,22 @@ class Predictor(BasePredictor):
 
         try:
             args = Namespace(**args)
-
-            parser = convert_namespace_to_parser(args)
-            parser = setup_parser(parser)
-
-            args = parser.parse_args()
-            args = train_util.read_config_from_file(args, parser)
+            try:
+                parser = convert_namespace_to_parser(args)
+            except:
+                print("convert_namespace_to_parser not passed")
+            try:
+                parser = setup_parser(parser)
+            except:
+                print("setup_parser not passed")
+            try:
+                args = parser.parse_args()
+            except:
+                print("parse_args not passed")
+            try:
+                args = train_util.read_config_from_file(args, parser)
+            except:
+                print("read_config_from_file not passed")        
         except:
             print("make args not passed")
 
