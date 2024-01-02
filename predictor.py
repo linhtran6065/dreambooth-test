@@ -238,6 +238,7 @@ class Predictor(BasePredictor):
             "bucket_no_upscale": True,
             "noise_offset": noise_offset,
             "adaptive_noise_scale": True,
+            "scale_v_pred_loss_like_noise_pred":True,
             "await-explicit-shutdown":True,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
         }
