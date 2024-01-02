@@ -47,12 +47,12 @@ def setup_parser(parser) -> argparse.ArgumentParser:
         action="store_true",
         help="disable token padding (same as Diffuser's DreamBooth) / トークンのpaddingを無効にする（Diffusers版DreamBoothと同じ動作）",
     )
-    parser.add_argument(
-        "--stop_text_encoder_training",
-        type=float,
-        default=0.8,
-        help="steps to stop text encoder training, -1 for no training / Text Encoderの学習を止めるステップ数、-1で最初から学習しない",
-    )
+    # parser.add_argument(
+    #     "--stop_text_encoder_training",
+    #     type=float,
+    #     default=0.8,
+    #     help="steps to stop text encoder training, -1 for no training / Text Encoderの学習を止めるステップ数、-1で最初から学習しない",
+    # )
     parser.add_argument(
         "--no_half_vae",
         action="store_true",
@@ -241,6 +241,7 @@ class Predictor(BasePredictor):
             "scale_v_pred_loss_like_noise_pred": False,
             "v_parameterization": False,
             "v_pred_like_loss": False,
+            "zero_terminal_snr": False,
             "await-explicit-shutdown":True,
             "num_cpu_threads_per_process": 2,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
