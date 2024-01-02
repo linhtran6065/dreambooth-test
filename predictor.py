@@ -237,6 +237,10 @@ class Predictor(BasePredictor):
             "xformers": True,
             "bucket_no_upscale": True,
             "noise_offset": noise_offset,
+            "adaptive_noise_scale": False,
+            "scale_v_pred_loss_like_noise_pred": False,
+            "v_parameterization": False,
+            "v_pred_like_loss": False,
             "await-explicit-shutdown":True,
             "num_cpu_threads_per_process": 2,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
