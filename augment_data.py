@@ -30,5 +30,5 @@ class Inpainter():
         pass
 
 
-image_cropper = FaceCropper()
-image_cropper.crop("image_folder")
+# image_cropper = FaceCropper()
+# image_cropper.crop("image_folder")
