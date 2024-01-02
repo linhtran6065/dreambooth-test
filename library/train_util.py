@@ -2848,7 +2848,7 @@ def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: 
         action="store_true",
         help="use memory efficient attention for CrossAttention / CrossAttentionに省メモリ版attentionを使う",
     )
-    parser.add_argument("--xformers", action="store_true", help="use xformers for CrossAttention / CrossAttentionにxformersを使う")
+    # parser.add_argument("--xformers", action="store_true", help="use xformers for CrossAttention / CrossAttentionにxformersを使う")
     parser.add_argument(
         "--sdpa",
         action="store_true",
