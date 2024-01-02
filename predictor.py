@@ -233,6 +233,7 @@ class Predictor(BasePredictor):
             "max_bucket_reso": 2048,
             "bucket_reso_steps": 64,
             "cache_latents": True,
+            "cache_latents_to_disk": True,
             "xformers": True,
             "bucket_no_upscale": True,
             "noise_offset": noise_offset,
