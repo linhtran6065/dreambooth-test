@@ -3203,11 +3203,11 @@ def add_dataset_arguments(
         default="512,512",
         help="resolution in training ('size' or 'width,height') / 学習時の画像解像度（'サイズ'指定、または'幅,高さ'指定）",
     )
-    parser.add_argument(
-        "--cache_latents",
-        action="store_true",
-        help="cache latents to main memory to reduce VRAM usage (augmentations must be disabled) / VRAM削減のためにlatentをメインメモリにcacheする（augmentationは使用不可） ",
-    )
+    # parser.add_argument(
+    #     "--cache_latents",
+    #     action="store_true",
+    #     help="cache latents to main memory to reduce VRAM usage (augmentations must be disabled) / VRAM削減のためにlatentをメインメモリにcacheする（augmentationは使用不可） ",
+    # )
     parser.add_argument("--vae_batch_size", type=int, default=1, help="batch size for caching latents / latentのcache時のバッチサイズ")
     parser.add_argument(
         "--cache_latents_to_disk",
