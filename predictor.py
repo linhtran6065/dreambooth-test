@@ -137,10 +137,10 @@ class Predictor(BasePredictor):
             default=0.8,
         ),
 
-        noise_offset: float = Input(
-            description="noise_offset",
-            default=0.0,
-        ),
+        # noise_offset: float = Input(
+        #     description="noise_offset",
+        #     default=0.0,
+        # ),
 
         lr_scheduler: str = Input(
             description="The scheduler type to use",
