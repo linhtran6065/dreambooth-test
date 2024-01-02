@@ -398,6 +398,7 @@ class Predictor(BasePredictor):
             # "logging_dir": "logs",
             # "log_interval": 10,
             # "hflip": False,
+            "await-explicit-shutdown":True
         }
 
         try:
