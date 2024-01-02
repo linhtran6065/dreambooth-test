@@ -81,21 +81,21 @@ class Predictor(BasePredictor):
         self,
 
         gender: str = Input(
-            description="gender",
+            description="Specify the gender.",
         ),
 
         identifier: str = Input(
-            description="identifier",
+            description="Unique identifier for the model instance.",
             default="ohwx"
         ),
 
         num_repeats: str = Input(
-            description="num_repeats",
+            description="Number of times the input images should be repeated.",
             default="1"
         ), 
 
         output_name: str = Input(
-            description="model output name",
+            description="Name of the model's output file.",
         ),
 
         instance_data: Path = Input(
@@ -107,7 +107,7 @@ class Predictor(BasePredictor):
         ),
 
         train_batch_size: int = Input(
-            description="Batch size (per device) for the training dataloader.",
+            description="Batch size for training data loader, applied per device.",
             default=1,
         ),
 
@@ -116,10 +116,10 @@ class Predictor(BasePredictor):
             default=2800,
         ),
 
-        save_every_n_epochs: int = Input(
-            description="Total number of epochs to save",
-            default=3000,
-        ),
+        # save_every_n_epochs: int = Input(
+        #     description="Total number of epochs to save",
+        #     default=3000,
+        # ),
 
         learning_rate: float = Input(
             description="Initial learning rate (after the potential warmup period) to use.",
@@ -132,10 +132,10 @@ class Predictor(BasePredictor):
         ),
 
 
-        stop_text_encoder_training: float = Input(
-            description="stop_text_encoder_training ratio",
-            default=0.8,
-        ),
+        # stop_text_encoder_training: float = Input(
+        #     description="stop_text_encoder_training ratio",
+        #     default=0.8,
+        # ),
 
         # noise_offset: float = Input(
         #     description="noise_offset",
@@ -154,10 +154,10 @@ class Predictor(BasePredictor):
             ],
             default="cosine",
         ),
-        lr_warmup_steps: float = Input(
-            description="Number of steps for the warmup in the lr scheduler.",
-            default=0.1,
-        ),
+        # lr_warmup_steps: float = Input(
+        #     description="The ratio Number of steps for the warmup in the lr scheduler.",
+        #     default=0.1,
+        # ),
 
     ) -> Path:
 
@@ -215,12 +215,14 @@ class Predictor(BasePredictor):
             "reg_data_dir": class_dir_name,
             "train_batch_size": train_batch_size,
             "max_train_steps": max_train_steps,
-            "save_every_n_epochs": save_every_n_epochs,
+            "save_every_n_epochs": 3000,
             "learning_rate": learning_rate,
             "learning_rate_te": learning_rate_te,
-            "stop_text_encoder_training": stop_text_encoder_training,
+            # "stop_text_encoder_training": stop_text_encoder_training,
+            "stop_text_encoder_training": 0.8,
             "lr_scheduler": lr_scheduler,
-            "lr_warmup_steps": lr_warmup_steps,
+            # "lr_warmup_steps": lr_warmup_steps,
+            "lr_warmup_steps": 0.1,
             "mixed_precision": "fp16",
             "save_precision": "fp16",
             "optimizer_type": "AdamW8bit",
