@@ -409,12 +409,12 @@ class Predictor(BasePredictor):
             "min_bucket_reso": 256,
             "max_bucket_reso": 2048,
             "bucket_reso_steps": 64,
-            "cache_latents": True,
-            "cache_latents_to_disk": True,
+            # "cache_latents": True,
+            # "cache_latents_to_disk": True,
             "xformers": True,
             "bucket_no_upscale": True,
-            "noise_offset": 0.0,
-            "adaptive_noise_scale": True,
+            # "noise_offset": 0.0,
+            # "adaptive_noise_scale": True,
             "await-explicit-shutdown":True,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
         }
