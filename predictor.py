@@ -272,41 +272,44 @@ class Predictor(BasePredictor):
 
         output_dir = "checkpoints"
 
-        # Create main directories if they don't exist
-        for dir_name in [instance_dir_name, class_dir_name, output_dir]:
-            if not os.path.exists(dir_name):
-                os.makedirs(dir_name)
+        try:
+            # Create main directories if they don't exist
+            for dir_name in [instance_dir_name, class_dir_name, output_dir]:
+                if not os.path.exists(dir_name):
+                    os.makedirs(dir_name)
 
-        # Extract instance_data ZIP file
-        instance_data_path = os.path.join(instance_dir_name, instance_subdir_name)
-        class_data_path = os.path.join(class_dir_name, class_subdir_name)
+            # Extract instance_data ZIP file
+            instance_data_path = os.path.join(instance_dir_name, instance_subdir_name)
+            class_data_path = os.path.join(class_dir_name, class_subdir_name)
 
-        if not os.path.exists(instance_data_path):
-            os.makedirs(instance_data_path)
+            if not os.path.exists(instance_data_path):
+                os.makedirs(instance_data_path)
 
-        if not os.path.exists(class_data_path):
-            os.makedirs(class_data_path)
+            if not os.path.exists(class_data_path):
+                os.makedirs(class_data_path)
 
-        with ZipFile(str(instance_data), "r") as zip_ref:
-                for zip_info in zip_ref.infolist():
-                    if not zip_info.filename.endswith("/") and not zip_info.filename.startswith("__MACOSX"):
-                        mt = mimetypes.guess_type(zip_info.filename)
-                        if mt and mt[0] and mt[0].startswith("image/"):
-                            zip_info.filename = os.path.join(instance_subdir_name, os.path.basename(zip_info.filename))
-                            zip_ref.extract(zip_info, instance_dir_name)
+            with ZipFile(str(instance_data), "r") as zip_ref:
+                    for zip_info in zip_ref.infolist():
+                        if not zip_info.filename.endswith("/") and not zip_info.filename.startswith("__MACOSX"):
+                            mt = mimetypes.guess_type(zip_info.filename)
+                            if mt and mt[0] and mt[0].startswith("image/"):
+                                zip_info.filename = os.path.join(instance_subdir_name, os.path.basename(zip_info.filename))
+                                zip_ref.extract(zip_info, instance_dir_name)
 
-        # Extract class_data ZIP file
-        class_data_path = os.path.join(class_dir_name, class_subdir_name)
-        if class_data is not None and not os.path.exists(class_data_path):
-            os.makedirs(class_data_path)
+            # Extract class_data ZIP file
+            class_data_path = os.path.join(class_dir_name, class_subdir_name)
+            if class_data is not None and not os.path.exists(class_data_path):
+                os.makedirs(class_data_path)
 
-            with ZipFile(str(class_data), "r") as zip_ref:
-                for zip_info in zip_ref.infolist():
-                    if not zip_info.filename.endswith("/") and not zip_info.filename.startswith("__MACOSX"):
-                        mt = mimetypes.guess_type(zip_info.filename)
-                        if mt and mt[0] and mt[0].startswith("image/"):
-                            zip_info.filename = os.path.join(class_subdir_name, os.path.basename(zip_info.filename))
-                            zip_ref.extract(zip_info, class_dir_name)
+                with ZipFile(str(class_data), "r") as zip_ref:
+                    for zip_info in zip_ref.infolist():
+                        if not zip_info.filename.endswith("/") and not zip_info.filename.startswith("__MACOSX"):
+                            mt = mimetypes.guess_type(zip_info.filename)
+                            if mt and mt[0] and mt[0].startswith("image/"):
+                                zip_info.filename = os.path.join(class_subdir_name, os.path.basename(zip_info.filename))
+                                zip_ref.extract(zip_info, class_dir_name)
+        except:
+            print("create dir not passed")
 
         # for path in [cog_instance_data, cog_output_dir, cog_class_data]:
         #     if os.path.exists(path):
@@ -397,15 +400,21 @@ class Predictor(BasePredictor):
             # "hflip": False,
         }
 
-        args = Namespace(**args)
+        try:
+            args = Namespace(**args)
 
-        parser = convert_namespace_to_parser(args)
-        parser = setup_parser(parser)
+            parser = convert_namespace_to_parser(args)
+            parser = setup_parser(parser)
 
-        args = parser.parse_args()
-        args = train_util.read_config_from_file(args, parser)
+            args = parser.parse_args()
+            args = train_util.read_config_from_file(args, parser)
+        except:
+            print("make args not passed")
 
-        main(args)
+        try:
+            main(args)
+        except:
+            print("main not passed")
 
         gc.collect()
         torch.cuda.empty_cache()
@@ -413,10 +422,13 @@ class Predictor(BasePredictor):
 
         out_path = "output.zip"
 
-        directory = Path(output_dir)
-        with ZipFile(out_path, "w") as zip:
-            for file_path in directory.rglob("*"):
-                print(file_path)
-                zip.write(file_path, arcname=file_path.relative_to(directory))
+        try:
+            directory = Path(output_dir)
+            with ZipFile(out_path, "w") as zip:
+                for file_path in directory.rglob("*"):
+                    print(file_path)
+                    zip.write(file_path, arcname=file_path.relative_to(directory))
+        except:
+            print("zip file not passed")
 
         return Path(out_path)
