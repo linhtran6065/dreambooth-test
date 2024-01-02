@@ -387,7 +387,7 @@ class Predictor(BasePredictor):
             # "save_interval": 10000,  # not used
             # "save_min_steps": 0,
             "mixed_precision": "fp16", #keep
-            "save_precision": "fp16", #new
+            # "save_precision": "fp16", #new
             "optimizer_type": "AdamW8bit",
             "max_data_loader_n_workers": 0,
             # "not_cache_latents": False,
