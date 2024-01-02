@@ -210,6 +210,11 @@ class Predictor(BasePredictor):
             default=1e-6,
         ),
 
+
+        stop_text_encoder_training: float = Input(
+            description="stop_text_encoder_training ratio",
+            default=0.8,
+        ),
         # scale_lr: bool = Input(
         #     description="Scale the learning rate by the number of GPUs, gradient accumulation steps, and batch size.",
         #     default=False,
@@ -372,6 +377,7 @@ class Predictor(BasePredictor):
             # "gradient_checkpointing": gradient_checkpointing,
             "learning_rate": learning_rate,
             "learning_rate_te": learning_rate_te,
+            "stop_text_encoder_training": stop_text_encoder_training,
             # "scale_lr": scale_lr,
             "lr_scheduler": lr_scheduler,
             "lr_warmup_steps": lr_warmup_steps,
@@ -387,7 +393,7 @@ class Predictor(BasePredictor):
             # "save_interval": 10000,  # not used
             # "save_min_steps": 0,
             "mixed_precision": "fp16", #keep
-            # "save_precision": "fp16", #new
+            "save_precision": "fp16", #new
             "optimizer_type": "AdamW8bit",
             "max_data_loader_n_workers": 0,
             # "not_cache_latents": False,
@@ -398,6 +404,14 @@ class Predictor(BasePredictor):
             # "logging_dir": "logs",
             # "log_interval": 10,
             # "hflip": False,
+            "enable_bucket": True,
+            "min_bucket_reso": 256,
+            "max_bucket_reso": 2048,
+            "bucket_reso_steps": 64,
+            "cache_latents": True,
+            "xformers": True,
+            "bucket_no_upscale": True,
+            "noise_offset": 0.0,
             "await-explicit-shutdown":True,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
         }
