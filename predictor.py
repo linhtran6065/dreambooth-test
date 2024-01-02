@@ -398,7 +398,8 @@ class Predictor(BasePredictor):
             # "logging_dir": "logs",
             # "log_interval": 10,
             # "hflip": False,
-            "await-explicit-shutdown":True
+            "await-explicit-shutdown":True,
+            "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
         }
 
         try:
