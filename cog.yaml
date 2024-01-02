@@ -26,5 +26,6 @@ build:
     - "xformers==0.0.20"
     - "toml"
     - "bitsandbytes==0.35.0"
+    - "autocrop"
 
 predict: "predictor.py:Predictor"
