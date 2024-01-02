@@ -413,7 +413,8 @@ class Predictor(BasePredictor):
             "cache_latents_to_disk": True,
             "xformers": True,
             "bucket_no_upscale": True,
-            # "noise_offset": 0.0,
+            "noise_offset": 0.0,
+            "adaptive_noise_scale": True,
             "await-explicit-shutdown":True,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
         }
