@@ -108,7 +108,7 @@ class Predictor(BasePredictor):
 
         train_batch_size: int = Input(
             description="Batch size for training data loader, applied per device.",
-            default=1,
+            default=2,
         ),
 
         max_train_steps: int = Input(
