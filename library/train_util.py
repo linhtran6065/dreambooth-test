@@ -3209,25 +3209,25 @@ def add_dataset_arguments(
     #     help="cache latents to main memory to reduce VRAM usage (augmentations must be disabled) / VRAM削減のためにlatentをメインメモリにcacheする（augmentationは使用不可） ",
     # )
     parser.add_argument("--vae_batch_size", type=int, default=1, help="batch size for caching latents / latentのcache時のバッチサイズ")
-    parser.add_argument(
-        "--cache_latents_to_disk",
-        action="store_true",
-        help="cache latents to disk to reduce VRAM usage (augmentations must be disabled) / VRAM削減のためにlatentをディスクにcacheする（augmentationは使用不可）",
-    )
-    parser.add_argument(
-        "--enable_bucket", action="store_true", help="enable buckets for multi aspect ratio training / 複数解像度学習のためのbucketを有効にする"
-    )
-    parser.add_argument("--min_bucket_reso", type=int, default=256, help="minimum resolution for buckets / bucketの最小解像度")
-    parser.add_argument("--max_bucket_reso", type=int, default=1024, help="maximum resolution for buckets / bucketの最大解像度")
-    parser.add_argument(
-        "--bucket_reso_steps",
-        type=int,
-        default=64,
-        help="steps of resolution for buckets, divisible by 8 is recommended / bucketの解像度の単位、8で割り切れる値を推奨します",
-    )
-    parser.add_argument(
-        "--bucket_no_upscale", action="store_true", help="make bucket for each image without upscaling / 画像を拡大せずbucketを作成します"
-    )
+    # parser.add_argument(
+    #     "--cache_latents_to_disk",
+    #     action="store_true",
+    #     help="cache latents to disk to reduce VRAM usage (augmentations must be disabled) / VRAM削減のためにlatentをディスクにcacheする（augmentationは使用不可）",
+    # )
+    # parser.add_argument(
+    #     "--enable_bucket", action="store_true", help="enable buckets for multi aspect ratio training / 複数解像度学習のためのbucketを有効にする"
+    # )
+    # parser.add_argument("--min_bucket_reso", type=int, default=256, help="minimum resolution for buckets / bucketの最小解像度")
+    # parser.add_argument("--max_bucket_reso", type=int, default=1024, help="maximum resolution for buckets / bucketの最大解像度")
+    # parser.add_argument(
+    #     "--bucket_reso_steps",
+    #     type=int,
+    #     default=64,
+    #     help="steps of resolution for buckets, divisible by 8 is recommended / bucketの解像度の単位、8で割り切れる値を推奨します",
+    # )
+    # parser.add_argument(
+    #     "--bucket_no_upscale", action="store_true", help="make bucket for each image without upscaling / 画像を拡大せずbucketを作成します"
+    # )
 
     parser.add_argument(
         "--token_warmup_min",
@@ -3282,13 +3282,13 @@ def add_dataset_arguments(
 
 
 def add_sd_saving_arguments(parser: argparse.ArgumentParser):
-    parser.add_argument(
-        "--save_model_as",
-        type=str,
-        default="safetensors",
-        choices=[None, "ckpt", "safetensors", "diffusers", "diffusers_safetensors"],
-        help="format to save the model (default is same to original) / モデル保存時の形式（未指定時は元モデルと同じ）",
-    )
+    # parser.add_argument(
+    #     "--save_model_as",
+    #     type=str,
+    #     default="safetensors",
+    #     choices=[None, "ckpt", "safetensors", "diffusers", "diffusers_safetensors"],
+    #     help="format to save the model (default is same to original) / モデル保存時の形式（未指定時は元モデルと同じ）",
+    # )
     parser.add_argument(
         "--use_safetensors",
         action="store_true",
