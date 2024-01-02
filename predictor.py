@@ -112,7 +112,7 @@ class Predictor(BasePredictor):
         ),
 
         max_train_steps: int = Input(
-            description="Total number of training steps to perform.  If provided, overrides num_train_epochs.",
+            description="Total number of training steps to perform. It should be number of input images * 100. For example, 14 images * 100 = 1400 steps)",
             # default=2800,
         ),
 
