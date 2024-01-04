@@ -12,6 +12,7 @@ import torch
 import library.train_util as train_util
 import library.config_util as config_util
 import library.custom_train_functions as custom_train_functions
+from augment_data import FaceCropper
 
 from cog import BasePredictor, Input, Path
 
@@ -106,15 +107,20 @@ class Predictor(BasePredictor):
             default=None,
         ),
 
-        train_batch_size: int = Input(
-            description="Batch size for training data loader, applied per device.",
-            default=2,
+        using_crop_images: bool = Input(
+            description="Whether to use crop images or not.",
+            default=True,
         ),
 
-        max_train_steps: int = Input(
-            description="Total number of training steps to perform. It should be number of input images * 100. For example, 14 images * 100 = 1400 steps)",
-            # default=2800,
+        train_batch_size: int = Input(
+            description="Batch size for training data loader, applied per device.",
+            default=1,
         ),
+
+        # max_train_steps: int = Input(
+        #     description="Total number of training steps to perform. It should be number of input images * 100. For example, 14 images * 100 = 1400 steps)",
+        #     # default=2800,
+        # ),
 
         # save_every_n_epochs: int = Input(
         #     description="Total number of epochs to save",
@@ -208,13 +214,21 @@ class Predictor(BasePredictor):
         except:
             print("create dir not passed")
 
+        # Add crop images if set to True
+        if using_crop_images == True:
+            image_cropper = FaceCropper()
+            image_cropper.crop(instance_dir_name)
+
+        num_train_images = len(os.listdir(instance_dir_name))
+        print(num_train_images)
         # some settings are fixed for the replicate model
         args = {
             "pretrained_model_name_or_path": "stablediffusionapi/realistic-vision-51",
             "train_data_dir": instance_dir_name,
             "reg_data_dir": class_dir_name,
+            "using_crop_images": using_crop_images,
             "train_batch_size": train_batch_size,
-            "max_train_steps": max_train_steps,
+            "max_train_steps": int((400/3) * num_train_images),
             "save_every_n_epochs": 3000,
             "learning_rate": learning_rate,
             "learning_rate_te": learning_rate_te,
