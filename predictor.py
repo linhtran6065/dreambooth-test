@@ -236,6 +236,7 @@ class Predictor(BasePredictor):
             "cache_latents_to_disk": True,
             "xformers": True,
             "bucket_no_upscale": True,
+            "seed": 1234,
             # "noise_offset": noise_offset,
             # "adaptive_noise_scale": False,
             # "scale_v_pred_loss_like_noise_pred": False,
