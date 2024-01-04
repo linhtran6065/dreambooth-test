@@ -128,7 +128,7 @@ class Predictor(BasePredictor):
 
         learning_rate_te: float = Input(
             description="Initial learning rate te (after the potential warmup period) to use.",
-            default=1e-5,
+            default=1e-6,
         ),
 
 
