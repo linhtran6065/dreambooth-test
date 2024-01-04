@@ -218,10 +218,10 @@ class Predictor(BasePredictor):
         if using_crop_images == True:
             print("Cropping images...")
             image_cropper = FaceCropper()
-            image_cropper.crop(instance_dir_name)
+            image_cropper.crop(instance_data_path)
             print("Cropping images done!")
 
-        num_train_images = len(os.listdir(instance_dir_name))
+        num_train_images = len(os.listdir(instance_data_path))
         print(num_train_images)
         # some settings are fixed for the replicate model
         args = {
