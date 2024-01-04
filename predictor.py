@@ -216,8 +216,10 @@ class Predictor(BasePredictor):
 
         # Add crop images if set to True
         if using_crop_images == True:
+            print("Cropping images...")
             image_cropper = FaceCropper()
             image_cropper.crop(instance_dir_name)
+            print("Cropping images done!")
 
         num_train_images = len(os.listdir(instance_dir_name))
         print(num_train_images)
