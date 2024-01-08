@@ -61,11 +61,13 @@ class Inpainter():
         return image, mask_image
     
     def inpaint(self, gender, cropped_images_list, image_folder):
+        print(cropped_images_list)
         inpainted_images = []
         prompt = f"A photo portrait of a {gender} wearing a business suit with a office background"
         negative_prompt = ""
 
         for index, cropped_image in enumerate(cropped_images_list):
+            print(cropped_image)
             try:
                 prepared_image, prepared_mask_image = self.prepare_images(image=cropped_image)
             except Exception as e:
