@@ -66,8 +66,17 @@ class Inpainter():
         negative_prompt = ""
 
         for index, cropped_image in enumerate(cropped_images_list):
-            image, mask_image = self.prepare_images(cropped_image)
-            inpainted_image = self.inpaint_pipe(prompt=prompt, num_inference_steps=50, image=image, mask_image=mask_image, negative_prompt=negative_prompt, guidance_scale=7.5).images[0]
+            try:
+                prepared_image, prepared_mask_image = self.prepare_images(image=cropped_image)
+            except Exception as e:
+                print(e)
+                print("prepare imgs not passed")
+
+            try:
+                inpainted_image = self.inpaint_pipe(prompt=prompt, num_inference_steps=50, image=prepared_image, mask_image=prepared_mask_image, negative_prompt=negative_prompt, guidance_scale=7.5).images[0]
+            except Exception as e:
+                print(e)
+                print("infer inpaint not passed")               
             inpainted_images.append(inpainted_image)
             inpainted_image.save(f"{image_folder}/inpainted_img_{index}.jpg")
 
