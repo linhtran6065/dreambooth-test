@@ -10,23 +10,31 @@ import torchvision.transforms as T
 from PIL import Image
 import random
 from diffusers import StableDiffusionPipeline, StableDiffusionInpaintPipeline
+from upscale.super_resolution import Upscaler
 
 
 class FaceCropper():
     def __init__(self):
         self.cropper = Cropper()
+        self.t2i_pipe = StableDiffusionPipeline.from_pretrained(
+            "stablediffusionapi/realistic-vision-v51",
+            torch_dtype=torch.float16,).to("cuda")
+        self.upscaler = Upscaler(text2img=self.t2i_pipe, scale=4)
 
     def crop(self, image_folder):
         cropped_count = 0
         cropped_images_list = []
         num_images = len(os.listdir(image_folder))
-        for _, filename in enumerate(os.listdir(image_folder)):
+
+        for index, filename in enumerate(os.listdir(image_folder)):
             if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
                 cropped_array = self.cropper.crop(f"{image_folder}/{filename}")
                 try:
                     cropped_image = Image.fromarray(cropped_array)
+                    print("Upscaling cropped images ...")
+                    cropped_image = self.upscaler.upscale(cropped_image)
                     cropped_images_list.append(cropped_image)
-                    cropped_image.save(f"{image_folder}/cropped_{filename}")
+                    cropped_image.save(f"{image_folder}/cropped_img_{index}.jpg")
                     cropped_count+=1
                 except:
                     continue
@@ -36,6 +44,7 @@ class FaceCropper():
 
 class Inpainter():
     def __init__(self):
+
         self.inpaint_pipe = StableDiffusionInpaintPipeline.from_pretrained(
             "stabilityai/stable-diffusion-2-inpainting",
             cache_dir="stable-diffusion-2-inpainting-cache",
@@ -67,18 +76,8 @@ class Inpainter():
         negative_prompt = ""
 
         for index, cropped_image in enumerate(cropped_images_list):
-            print(cropped_image)
-            try:
-                prepared_image, prepared_mask_image = self.prepare_images(image=cropped_image)
-            except Exception as e:
-                print(e)
-                print("prepare imgs not passed")
-
-            try:
-                inpainted_image = self.inpaint_pipe(prompt=prompt, num_inference_steps=50, image=prepared_image, mask_image=prepared_mask_image, negative_prompt=negative_prompt, guidance_scale=7.5).images[0]
-            except Exception as e:
-                print(e)
-                print("infer inpaint not passed")               
+            prepared_image, prepared_mask_image = self.prepare_images(image=cropped_image)
+            inpainted_image = self.inpaint_pipe(prompt=prompt, num_inference_steps=50, image=prepared_image, mask_image=prepared_mask_image, negative_prompt=negative_prompt, guidance_scale=7.5).images[0]
             inpainted_images.append(inpainted_image)
             inpainted_image.save(f"{image_folder}/inpainted_img_{index}.jpg")
 

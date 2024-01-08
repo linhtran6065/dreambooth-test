@@ -244,7 +244,7 @@ class Predictor(BasePredictor):
 
         # some settings are fixed for the replicate model
         args = {
-            "pretrained_model_name_or_path": "stablediffusionapi/realistic-vision-51",
+            "pretrained_model_name_or_path": "stablediffusionapi/realistic-vision-v51",
             "train_data_dir": instance_dir_name,
             "reg_data_dir": class_dir_name,
             "using_crop_images": using_crop_images,

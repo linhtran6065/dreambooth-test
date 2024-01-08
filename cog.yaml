@@ -29,5 +29,8 @@ build:
     - "autocrop"
     - "scipy==1.9.3"
     - "safetensors"
+    - "numpy"
+    - "Pillow"
+    - "tqdm"
 
 predict: "predictor.py:Predictor"
