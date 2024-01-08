@@ -218,6 +218,8 @@ class Predictor(BasePredictor):
         except:
             print("create dir not passed")
 
+        num_original_images = len(os.listdir(instance_data_path))
+
         # Add crop images if set to True
         if using_crop_images == True:
             print("Cropping images...")
@@ -236,11 +238,12 @@ class Predictor(BasePredictor):
 
         print(f"Number of cropped images: {len(cropped_images_list)}")
         print(f"Number of inpainted images: {len(inpainted_images_list)}")
+        print(f"Number of original images: {num_original_images}")
         num_train_images = len(os.listdir(instance_data_path))
         print(f"Number of training images: {num_train_images}")
 
         # Calculate steps
-        training_steps = 150*num_train_images+100*len(cropped_images_list)+100*len(inpainted_images_list)
+        training_steps = 150*num_original_images+100*len(cropped_images_list)+100*len(inpainted_images_list)
 
         # some settings are fixed for the replicate model
         args = {
