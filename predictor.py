@@ -240,7 +240,7 @@ class Predictor(BasePredictor):
         print(f"Number of training images: {num_train_images}")
 
         # Calculate steps
-
+        training_steps = 150*num_train_images+100*len(cropped_images_list)+100*len(inpainted_images_list)
 
         # some settings are fixed for the replicate model
         args = {
@@ -249,7 +249,7 @@ class Predictor(BasePredictor):
             "reg_data_dir": class_dir_name,
             "using_crop_images": using_crop_images,
             "train_batch_size": train_batch_size,
-            "max_train_steps": 150 * num_train_images,
+            "max_train_steps": training_steps,
             "save_every_n_epochs": 3000,
             "learning_rate": learning_rate,
             "learning_rate_te": learning_rate_te,
