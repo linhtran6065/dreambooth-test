@@ -228,7 +228,7 @@ class Predictor(BasePredictor):
             if using_inpainting_images == True:
                 print("Inpainting images...")
                 inpainter = Inpainter()
-                inpainted_images_list = inpainter.inpaint(cropped_images_list, instance_data_path)
+                inpainted_images_list = inpainter.inpaint(gender, cropped_images_list, instance_data_path)
         except Exception as e:
             print(e)
             print("Inpainting not passed")
