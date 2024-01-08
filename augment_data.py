@@ -16,10 +16,7 @@ from upscale.super_resolution import Upscaler
 class FaceCropper():
     def __init__(self):
         self.cropper = Cropper()
-        self.t2i_pipe = StableDiffusionPipeline.from_pretrained(
-            "stablediffusionapi/realistic-vision-v51",
-            torch_dtype=torch.float16,).to("cuda")
-        self.upscaler = Upscaler(text2img=self.t2i_pipe, scale=4)
+        self.upscaler = Upscaler(scale=4)
 
     def crop(self, image_folder):
         cropped_count = 0
