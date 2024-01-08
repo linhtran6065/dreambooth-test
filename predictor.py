@@ -12,7 +12,7 @@ import torch
 import library.train_util as train_util
 import library.config_util as config_util
 import library.custom_train_functions as custom_train_functions
-from augment_data import FaceCropper
+from augment_data import FaceCropper, Inpainter
 
 from cog import BasePredictor, Input, Path
 
@@ -112,6 +112,11 @@ class Predictor(BasePredictor):
             default=True,
         ),
 
+        using_inpainting_images: bool = Input(
+            description="Whether to use inpainting images or not.",
+            default=True,
+        ),
+
         train_batch_size: int = Input(
             description="Batch size for training data loader, applied per device.",
             default=1,
@@ -136,7 +141,6 @@ class Predictor(BasePredictor):
             description="Initial learning rate te (after the potential warmup period) to use.",
             default=1e-6,
         ),
-
 
         # stop_text_encoder_training: float = Input(
         #     description="stop_text_encoder_training ratio",
@@ -218,11 +222,26 @@ class Predictor(BasePredictor):
         if using_crop_images == True:
             print("Cropping images...")
             image_cropper = FaceCropper()
-            image_cropper.crop(instance_data_path)
-            print("Cropping images done!")
+            cropped_images_list = image_cropper.crop(instance_data_path)
 
+        try:
+            if using_inpainting_images == True:
+                print("Inpainting images...")
+                inpainter = Inpainter()
+                inpainted_images_list = inpainter.inpaint(cropped_images_list, instance_data_path)
+        except Exception as e:
+            print(e)
+            print("Inpainting not passed")
+        
+
+        print(f"Number of cropped images: {len(cropped_images_list)}")
+        print(f"Number of inpainted images: {len(inpainted_images_list)}")
         num_train_images = len(os.listdir(instance_data_path))
-        print(num_train_images)
+        print(f"Number of training images: {num_train_images}")
+
+        # Calculate steps
+
+
         # some settings are fixed for the replicate model
         args = {
             "pretrained_model_name_or_path": "stablediffusionapi/realistic-vision-51",
@@ -230,7 +249,6 @@ class Predictor(BasePredictor):
             "reg_data_dir": class_dir_name,
             "using_crop_images": using_crop_images,
             "train_batch_size": train_batch_size,
-            # "max_train_steps": int((400/3) * num_train_images),
             "max_train_steps": 150 * num_train_images,
             "save_every_n_epochs": 3000,
             "learning_rate": learning_rate,
@@ -253,44 +271,20 @@ class Predictor(BasePredictor):
             "cache_latents_to_disk": True,
             "xformers": True,
             "bucket_no_upscale": True,
-            # "noise_offset": noise_offset,
-            # "adaptive_noise_scale": False,
-            # "scale_v_pred_loss_like_noise_pred": False,
-            # "v_parameterization": False,
-            # "v_pred_like_loss": False,
-            # "zero_terminal_snr": False,
             "await-explicit-shutdown":True,
-            # "num_cpu_threads_per_process": 2,
             "upload-url":"http://api.tenant-replicate-prdsvcs.svc.cluster.local/_internal/file-upload/"
         }
 
-        try:
-            args = Namespace(**args)
-            print(args)
-            try:
-                parser = convert_namespace_to_parser(args)
-            except:
-                print("convert_namespace_to_parser not passed")
-            try:
-                parser = setup_parser(parser)
-            except:
-                print("setup_parser not passed")
-            try:
-                args = parser.parse_args()
-            except:
-                print("parse_args not passed")
-            try:
-                args = train_util.read_config_from_file(args, parser)
-            except:
-                print("read_config_from_file not passed")        
-        except:
-            print("make args not passed")
 
-        try:
-            main(args)
-        except Exception as e:
-            print(e)
-            print("main not passed")
+        args = Namespace(**args)
+        print(args)
+
+        parser = convert_namespace_to_parser(args)
+        parser = setup_parser(parser)
+        args = parser.parse_args()
+        args = train_util.read_config_from_file(args, parser)
+
+        main(args)
 
         gc.collect()
         torch.cuda.empty_cache()
@@ -298,13 +292,12 @@ class Predictor(BasePredictor):
 
         out_path = "output.zip"
 
-        try:
-            directory = Path(output_dir)
-            with ZipFile(out_path, "w") as zip:
-                for file_path in directory.rglob("*"):
-                    print(file_path)
-                    zip.write(file_path, arcname=file_path.relative_to(directory))
-        except:
-            print("zip file not passed")
+
+        directory = Path(output_dir)
+        with ZipFile(out_path, "w") as zip:
+            for file_path in directory.rglob("*"):
+                print(file_path)
+                zip.write(file_path, arcname=file_path.relative_to(directory))
+
 
         return Path(out_path)

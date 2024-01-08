@@ -27,5 +27,7 @@ build:
     - "toml"
     - "bitsandbytes==0.35.0"
     - "autocrop"
+    - "scipy==1.9.3"
+    - "safetensors"
 
 predict: "predictor.py:Predictor"
