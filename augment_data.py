@@ -41,7 +41,7 @@ class Inpainter():
             cache_dir="stable-diffusion-2-inpainting-cache",
             torch_dtype=torch.float16,).to("cuda")
 
-    
+    @staticmethod
     def prepare_images(image, augmentation_scale = (0.6, 1.0)):
         mask = torch.zeros((1, 3, 512, 512)).cuda()
         mask[:, :, 30:460, 100:400] += 1
