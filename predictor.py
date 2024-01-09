@@ -243,7 +243,7 @@ class Predictor(BasePredictor):
         print(f"Number of training images: {num_train_images}")
 
         # Calculate steps
-        training_steps = 150*num_original_images+100*len(cropped_images_list)+100*len(inpainted_images_list)
+        training_steps = 150*num_original_images+100*len(cropped_images_list)+50*len(inpainted_images_list)
 
         # some settings are fixed for the replicate model
         args = {
