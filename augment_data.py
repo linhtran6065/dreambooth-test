@@ -28,8 +28,8 @@ class FaceCropper():
                 cropped_array = self.cropper.crop(f"{image_folder}/{filename}")
                 try:
                     cropped_image = Image.fromarray(cropped_array)
-                    print(f"Upscaling cropped images {index} ...")
-                    cropped_image = self.upscaler.upscale(cropped_image)
+                    # print(f"Upscaling cropped images {index} ...")
+                    # cropped_image = self.upscaler.upscale(cropped_image)
                     cropped_images_list.append(cropped_image)
                     cropped_image.save(f"{image_folder}/cropped_img_{index}.jpg")
                     cropped_count+=1
