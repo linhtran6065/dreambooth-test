@@ -189,10 +189,14 @@ class Predictor(BasePredictor):
             instance_data_path = os.path.join(instance_dir_name, instance_subdir_name)
             class_data_path = os.path.join(class_dir_name, class_subdir_name)
 
-            if not os.path.exists(instance_data_path):
+            if os.path.exists(instance_data_path):
+                shutil.rmtree(instance_data_path)
+            else:  
                 os.makedirs(instance_data_path)
 
-            if not os.path.exists(class_data_path):
+            if os.path.exists(class_data_path):
+                shutil.rmtree(class_data_path)
+            else:
                 os.makedirs(class_data_path)
 
             with ZipFile(str(instance_data), "r") as zip_ref:
